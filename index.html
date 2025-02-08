@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>P5 XI-5</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f4f4f4;
+        padding: 20px;
+        margin: 0;
+      }
+      .container {
+        max-width: 18000px;
+        margin: 100px;
+        background: white;
+        padding: 100px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+      }
+      .content {
+        flex: 2;
+        padding-right: 20px;
+      }
+      h2 {
+        margin-bottom: 10px;
+      }
+      .video-container {
+        margin-top: 20px;
+        position: relative;
+      }
+      video {
+        width: 100%;
+        height: 500px;
+        border-radius: 5px;
+        margin-bottom: 14px;
+      }
+      .controls {
+        margin-top: 10px;
+      }
+      .video-label {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 8px 10px;
+        border-radius: 2px;
+        font-size: 30px;
+      }
+      .poster {
+        width: 450px;
+        height: 640px;
+        border-radius: 10px;
+        object-fit: cover;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      }
+      @media (max-width: 1024px) {
+        .container {
+          flex-direction: column;
+          align-items: center;
+        }
+        .content {
+          padding-right: 0;
+        }
+        .poster {
+          width: 100%;
+          height: auto;
+          max-width: 500px;
+          margin-top: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <h2>VIDEO DAN POSTER P5</h2>
+        <p>Kelas XI-5</p>
+        <div class="video-label" id="videoLabel">Kelompok 1</div>
+        <div class="video-container">
+          <video id="mainVideo" controls>
+            <source src="video1.mp4" type="video/mp4" />
+            Browser Anda tidak mendukung pemutaran video.
+          </video>
+          <div class="controls">
+            <button onclick="prevVideo()">&#9665; Sebelumnya</button>
+            <button onclick="nextVideo()">Selanjutnya &#9655;</button>
+          </div>
+        </div>
+      </div>
+      <img
+        id="poster"
+        class="poster"
+        src="poster1.jpg"
+        alt="Poster Kelompok 1"
+      />
+    </div>
+
+    <script>
+      const videos = ["video1.mp4", "video2.mp4", "video3.mp4"];
+      const labels = ["Kelompok 1", "Kelompok 2", "Kelompok 3"];
+      const posters = ["poster1.jpg", "poster2.jpg", "poster3.jpg"];
+      let index = 0;
+      const mainVideo = document.getElementById("mainVideo");
+      const videoLabel = document.getElementById("videoLabel");
+      const poster = document.getElementById("poster");
+
+      function updateContent() {
+        mainVideo.src = videos[index];
+        videoLabel.textContent = labels[index];
+        poster.src = posters[index];
+        poster.alt = `Poster ${labels[index]}`;
+        mainVideo.play();
+      }
+
+      function nextVideo() {
+        index = (index + 1) % videos.length;
+        updateContent();
+      }
+
+      function prevVideo() {
+        index = (index - 1 + videos.length) % videos.length;
+        updateContent();
+      }
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowRight") {
+          nextVideo();
+        } else if (event.key === "ArrowLeft") {
+          prevVideo();
+        }
+      });
+
+      mainVideo.addEventListener("ended", nextVideo);
+    </script>
+  </body>
+</html>
